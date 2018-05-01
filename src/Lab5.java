@@ -25,7 +25,9 @@ public class Lab5 {
 	/****************************************************/
 	public static void main(String[] args)  {
 		int selection = 1;
+
 		Scanner menuSelection = new Scanner(System.in);
+
 		while(selection != 0){
 			System.out.println("Enter 1 to check how long it takes to get rich on a magic coin");
 			System.out.println("Enter 2 to calculate e^x for any real x");
@@ -34,25 +36,19 @@ public class Lab5 {
 			System.out.println("Enter 0 to exit");
 			System.out.println("What is your choice?");
 			selection = menuSelection.nextInt();
-			
+
 			switch(selection){
 			case 1: getRichQuick();
 			continue;
 			case 2: System.out.println("Enter a real number");
 			double realNum = menuSelection.nextDouble();
-			System.out.println(eTaylor(realNum));
+			System.out.println("e^" + realNum + " = " + eTaylor(realNum));
 			continue;
+			case 3: palindromeCheck();
+			continue;
+			case 4: System.exit(0);
 			}
 		}
-
-
-		//getRichQuick();
-
-		//testing the eTaylor method. 
-		//using 0 as the input should return 1.0 if working correctly
-		//System.out.println(eTaylor(0));
-
-		palindromeCheck();
 	}
 
 	public static void getRichQuick() {
@@ -111,38 +107,31 @@ public class Lab5 {
 		Scanner keyboard = new Scanner(System.in);
 		someWord = keyboard.nextLine();
 
-		// for each word user enters
-		while (keyboard.hasNext()) {
-			someWord = keyboard.nextLine();
+		//markers for the beginning and end 
+		//of the string entered by the user
+		int beginning = 0;
+		int end = someWord.length()-1;
+		boolean isPalidrome = true;
+		while(beginning < end){
+
+			char beginLetter = someWord.charAt(beginning);
+			char endLetter = someWord.charAt(end);
+
+			if(beginLetter != endLetter){
+				isPalidrome = false;
+				break;
+			}
 			total++;
-
-			System.out.println("  " + total + " " + someWord);
+			beginning++;
+			end--;
 		}
-
-		// x is a variable for count and y is variable total
-		// #2. print There are x palindromes out of y words 
-
+		if(isPalidrome == true){
+			count++;
+			System.out.println(someWord + " is a palidrome");
+		}else{
+			System.out.println(someWord + " is not a palidrome");
+		}
+		System.out.println("Total: " + count + " palidromes "
+				+ "out of " + total);
 	}
-
-	// Part 4 goes here, write a menu using the following specifications
-
-	//Welcome to Lab5!
-	//Enter 1 to check how long it takes to get rich on a magic dollar coin. 
-	//Enter 2 to calculate e^x for any real x. 
-	//Enter 3 to enter palindrome words.
-	//Enter 4 to re-print the menu. 
-	//Enter 0 to exit. 
-
-	// -- Sample outputs, delete these after completing the lab and verifying your output --
-	//What is your choice? 3        
-	//Enter an x: 1 e^1 = 2.7182818284590452  
-	//What is your choice? 0 
-	//Thanks for participating! Goodbye. 
-
-
 }
-
-
-
-
-
