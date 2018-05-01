@@ -2,25 +2,59 @@ import java.util.Scanner;
 import java.util.*;
 
 /**
- * Description of this class here
+ * The first method of this class will return the values, per day,
+ * of the increase in value after adding 1 + previousAmount / 2
+ * then stop once 1m is reached.
+ * 
+ * The second method uses a helper method to produce the value
+ * of a number when run through the Taylor Series calculation
+ * The helper method will take in the value given to the parent method
+ * then calculate the exponential value and factorial, then return
+ * the value of those two calculations divided by each other. 
+ * 
+ * The final calculation will take in a String from the user and
+ * check if it is a palindrome or not.
  */
 
 
 public class Lab5 {
 
-	//----- NOTE: To close BlueJ terminal window after output is displayed you
-	// might have to press CTRL + Z then close the window ------// 
-
+	/****************************************************/
+	/* Main method here. All methods that are used are  */
+	/* called here, helper methods excluded.			*/
+	/****************************************************/
 	public static void main(String[] args)  {
+		int selection = 1;
+		Scanner menuSelection = new Scanner(System.in);
+		while(selection != 0){
+			System.out.println("Enter 1 to check how long it takes to get rich on a magic coin");
+			System.out.println("Enter 2 to calculate e^x for any real x");
+			System.out.println("Enter 3 to enter palindrome words");
+			System.out.println("Enter 4 to re-print the menu");
+			System.out.println("Enter 0 to exit");
+			System.out.println("What is your choice?");
+			selection = menuSelection.nextInt();
+			
+			switch(selection){
+			case 1: getRichQuick();
+			continue;
+			case 2: System.out.println("Enter a real number");
+			double realNum = menuSelection.nextDouble();
+			System.out.println(eTaylor(realNum));
+			continue;
+			}
+		}
 
-		// Test your methods by calling them here
-		//getRichQuick();                 		// Should run your method
-		double taylorResult = eTaylor(3.5);    // Will call your method with a parameter. Now display the return value from your method        
 
-		//palindromeCheck();   					// test your method
+		//getRichQuick();
+
+		//testing the eTaylor method. 
+		//using 0 as the input should return 1.0 if working correctly
+		//System.out.println(eTaylor(0));
+
+		palindromeCheck();
 	}
 
-	// Part 1
 	public static void getRichQuick() {
 		// Declare your variables here and implement your logic
 		double total = 0;
@@ -33,16 +67,31 @@ public class Lab5 {
 		}
 	}
 
-	// Part 2 
 	public static double eTaylor(double x) {
 		double taylorNumber = 0.0;
-		// Your logic goes here
+
+		taylorNumber = 1 + x + NthDividedByFactorial(x);
 
 		return taylorNumber;
 	}
-	
-	public static double NthDividedByFactoral(double x){
-		
+
+	/****************************************************/
+	/* helper method for getting the value of x raised  */
+	/* to the nth power. Just multiply by two until n.	*/
+	/* then the second loop gets the factorial value	*/
+	/****************************************************/
+	public static double NthDividedByFactorial(double x){
+		int n = 5;
+		int factorial = 1;
+		for(int i=1;i<=n;i++){
+			x = x * 2;
+		}
+
+		for(int q=1;q<=n;q++){
+			factorial = factorial * q;
+		}
+		double xModified = x/factorial;
+		return xModified;
 	}
 
 	// Part 3
@@ -52,38 +101,23 @@ public class Lab5 {
 	 */
 	public static void palindromeCheck(){
 
-		// you could use any of the words below to test your method:
-		// banana, sneeze, radar, roof, kayak, mine, racer, racecar, refer, james, joyce
-		// tattarrattat, toyota, madam, goodbye
-
-
 		String someWord = ""; // Stores words read from user input
-		int count = 0;        // keeps track of Palindrome words only (define algorithm to count # of palindrome words
-		int total = 0;        // Counts the total number of lines read from the given text file
+		int count = 0;        // keeps track of Palindrome words only
+		int total = 0;        // Counts the total number of lines read from the given input
 
-		System.out.println(" Enter some words separated by white space");    // Ask for user input
+		System.out.println("Enter some words separated by white space");
 
 		// declare your Scanner object here
 		Scanner keyboard = new Scanner(System.in);
-
-		// hint 1: Using keybord.next() will only return what comes before a space.
-		// hint 2: Using keybord.nextLine() automatically reads the entire current line.
+		someWord = keyboard.nextLine();
 
 		// for each word user enters
 		while (keyboard.hasNext()) {
-			someWord = keyboard.next();          // store each word in a string variable and then do your operations
-			total++;                             // increment number of words as you read each one
+			someWord = keyboard.nextLine();
+			total++;
 
-			// #1. Code your logic for how to determine if a word is Palindrome first, then complete # 2
-
-
-
-			System.out.println("  " + total + " " + someWord);   // test
+			System.out.println("  " + total + " " + someWord);
 		}
-
-		// if encountered ENTER then close scanner stream and terminate
-		keyboard.close();
-
 
 		// x is a variable for count and y is variable total
 		// #2. print There are x palindromes out of y words 
